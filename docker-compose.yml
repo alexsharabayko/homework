@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  homework-server:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '8877:3000'
+    depends_on:
+      - homework-db
+  homework-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: homework
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
