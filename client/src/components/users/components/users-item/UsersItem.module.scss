@@ -1,0 +1,29 @@
+.item {
+  flex: 0 1 33.3333%;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+
+.card {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+}
+
+.avatar {
+  // Fast hack for avatar size - need more time to implement better solution
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column-reverse;
+  margin-left: 20px;
+}
+
+.name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}

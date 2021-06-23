@@ -1,20 +1,13 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
+const { v4: uuidv4 } = require('uuid');
 
 const sequelize = new Sequelize('homework', 'user', 'secret', {
 	host: 'homework-db',
 	dialect: 'postgres',
 });
-
-(async () => {
-	try {
-		await sequelize.authenticate();
-		console.log('Connection has been established successfully.');
-	} catch (error) {
-		console.error('Unable to connect to the database:', error);
-	}
-})();
 
 const User = sequelize.define('User', {
 	name: {
@@ -42,6 +35,7 @@ const User = sequelize.define('User', {
 	const PORT = 3000;
 	const HOST = '0.0.0.0';
 
+	app.use(cors());
 	app.use(bodyParser());
 
 	app.get('/', (req, res) => {
@@ -53,7 +47,25 @@ const User = sequelize.define('User', {
 	});
 
 	app.post('/users', async (req, res) => {
-		res.json(await User.create(req.body));
+		const newUser = await User.create({
+			...req.body,
+			avatarUrl: `https://i.pravatar.cc/150?u=${uuidv4()}`
+		});
+
+		res.json(newUser);
+	});
+
+	app.patch('/users/:id', async (req, res) => {
+		await User.update(
+			req.body,
+			{
+				where: {
+					id: req.params.id,
+				},
+			},
+		);
+
+		res.json(await User.findByPk(req.params.id));
 	});
 
 	app.delete('/users/:id', async (req, res) => {

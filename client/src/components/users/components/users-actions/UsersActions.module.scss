@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  padding: 50px 0;
+}
+
+.filters {
+  display: flex;
+  margin-left: 10px;
+  padding: 5px;
+  flex-grow: 1;
+  background-color: white;
+}
+
+.search {
+  flex-grow: 1;
+}
+
+.input {
+  width: 100%;
+
+  &:before,
+  &:after {
+    display: none;
+  }
+}
